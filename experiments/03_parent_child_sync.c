@@ -38,7 +38,7 @@ int main(void) {
         sleep(1);
 
         /* 向父进程发送“就绪”信号。 */
-        if (write(pipefd[1], &signal, sizeof(signal)) != sizeof(signal)) {
+        if (write(pipefd[1], &signal, sizeof(signal)) == -1) {
             perror("child write failed");
             close(pipefd[1]);
             exit(1);

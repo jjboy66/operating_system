@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
 /**
  * @brief 演示父进程创建子进程并分别输出进程信息。
@@ -26,6 +27,11 @@ int main(void) {
     } else {
         /* 父进程分支：打印自身PID以及新创建子进程PID。 */
         printf("[父进程] PID=%d, 子进程PID=%d\n", getpid(), pid);
+        /* 父进程等待子进程结束，确保实验输出关系稳定。 */
+        if (wait(NULL) < 0) {
+            perror("wait failed");
+            return 1;
+        }
     }
 
     return 0;

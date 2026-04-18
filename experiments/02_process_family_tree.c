@@ -52,11 +52,17 @@ int main(void) {
         }
 
         /* 第一代子进程等待孙进程结束，保持层级关系清晰。 */
-        wait(NULL);
+        if (wait(NULL) < 0) {
+            perror("wait grandchild failed");
+            exit(1);
+        }
         exit(0);
     }
 
     /* 父进程等待第一代子进程结束，避免僵尸进程。 */
-    wait(NULL);
+    if (wait(NULL) < 0) {
+        perror("wait first child failed");
+        return 1;
+    }
     return 0;
 }

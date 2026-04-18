@@ -4,6 +4,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#define TASK_COMPLETE_EXIT_CODE 42
+
 /**
  * @brief 演示wait()阻塞效果：父进程在子进程结束前一直等待。
  * @param 无。
@@ -24,7 +26,7 @@ int main(void) {
         printf("[子进程] 开始执行耗时任务...\n");
         sleep(2);
         printf("[子进程] 任务结束，准备退出。\n");
-        exit(42);
+        exit(TASK_COMPLETE_EXIT_CODE);
     } else {
         int status = 0;
 
